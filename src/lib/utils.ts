@@ -52,12 +52,8 @@ export function processImageUrl(originalUrl: string): string {
     return `${proxyUrl}${encodeURIComponent(originalUrl)}`;
   }
 
-  // Cloudflare Pages / HTTPS 场景兜底：仅对 http 图片走站内代理，避免混合内容被浏览器拦截
-  if (originalUrl.startsWith('http://')) {
-    return `/api/image-proxy?url=${encodeURIComponent(originalUrl)}`;
-  }
-
-  return originalUrl;
+  // Cloudflare Pages / HTTPS 场景兜底：自动走站内代理，避免外链防盗链与混合内容问题
+  return `/api/image-proxy?url=${encodeURIComponent(originalUrl)}`;
 }
 
 /**
